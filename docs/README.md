@@ -3,12 +3,14 @@
 
 To view a written out version, check [here](challenge.md).
 
-# My solution
-is still a work in progress.
+# How it works
 
-At first, a simple Golang server that manually forwarded all requests seemed
-like it might have been a good option to me. However, I remembered using Nginx
-for this exact problem a few years ago. Unfortunately I also forgot that Nginx
-does not implement the `CONNECT` method. The choices then to solve this issue
-would be using a patched 3rd-party build of Nginx with a proxy `CONNECT` method,
-or instead to use Apache HTTP Server's proxy modules.
+[Nginx](https://nginx.org/) is used for the proxy. The service creates a log of
+the bandwidth usage and site analytics. This log is then parsed by a Golang
+service, which provides the overall metrics.
+
+There were a lot of considerations that went into this implementation. [Squid
+Cache](https://www.squid-cache.org/) or [Apache HTTP
+Server](https://httpd.apache.org/) may have also been viable choices,
+especially as they have more native support for proxying than Nginx does. Though
+Nginx is much easier to setup (biased).
