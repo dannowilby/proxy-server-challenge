@@ -14,3 +14,6 @@ Cache](https://www.squid-cache.org/) or [Apache HTTP
 Server](https://httpd.apache.org/) may have also been viable choices,
 especially as they have more native support for proxying than Nginx does. Though
 Nginx is much easier to setup (biased).
+
+Now, the proxy is currently configured with Squid. That is true. However the
+interplay between the logs and the request headers are acting finicky and need more work done on them.
