@@ -57,14 +57,13 @@ func calculateMetrics() Metrics {
 			continue
 		}
 
-		// Most likely is a redirect or error status
-		// so don't record it in the metrics
-		if status != 200 {
-			continue
-		}
-
 		totalBandwidth += bytesSent
-		siteVisits[url]++
+
+		// only include the sites that are actually visited and not the
+		// intermediate urls
+		if status == 200 {
+			siteVisits[url]++
+		}
 	}
 
 	bandwidthMB := float64(totalBandwidth) / (1024 * 1024)
