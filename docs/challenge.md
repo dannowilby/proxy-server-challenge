@@ -1,4 +1,7 @@
-# Requirements
+![challenge screenshot](challenge.jpg)
+
+
+## Requirements
 
 1. Implement a proxy server that supports basic authentication via
    username/password

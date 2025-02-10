@@ -114,6 +114,6 @@ func main() {
 	}()
 
 	http.HandleFunc("/metrics", metricsHandler)
-	fmt.Println("Metrics server running on port 9090...")
+	fmt.Println("Metrics server starting...")
 	http.ListenAndServe(":9090", nil)
 }
