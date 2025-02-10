@@ -26,7 +26,7 @@ type Site struct {
 }
 
 func calculateMetrics() Metrics {
-	fmt.Println("Calculating metrics")
+	fmt.Println("Calculating metrics.")
 
 	file, err := os.Open(logFilePath)
 	if err != nil {
@@ -105,7 +105,7 @@ func main() {
 		syscall.SIGQUIT)
 	go func() {
 		_ = <-sigc
-		fmt.Println("\n")
+		fmt.Println("\nShutting down.")
 		metrics := calculateMetrics()
 		data, err := json.MarshalIndent(metrics, "", "  ")
 		if err != nil {
