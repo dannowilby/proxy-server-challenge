@@ -13,7 +13,7 @@ import (
 	"syscall"
 )
 
-const logFilePath = "/var/log/nginx/proxy_access.log"
+const logFilePath = "/etc/nginx/logs/access.log"
 
 type Metrics struct {
 	BandwidthUsage string `json:"bandwidth_usage"`

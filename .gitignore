@@ -1,1 +1,3 @@
 .htpasswd
+cert.pem
+key.pem
