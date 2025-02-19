@@ -13,7 +13,7 @@ import (
 	"syscall"
 )
 
-const logFilePath = "/etc/nginx/logs/access.log"
+const logFilePath = "/usr/local/openresty/nginx/logs/access.log"
 
 type Metrics struct {
 	BandwidthUsage string `json:"bandwidth_usage"`
