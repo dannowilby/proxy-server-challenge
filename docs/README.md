@@ -10,8 +10,10 @@ up on it—along with Go too.
 Before you start, getting the project up and running is pretty simple.
 
 1. **Create your authentication file** - [apache2-utils](https://pkgs.alpinelinux.org/package/edge/main/x86/apache2-utils)
-   provides the [htpasswd](https://httpd.apache.org/docs/2.4/programs/htpasswd.html) command to create the `.htpasswd` file. Move this
-   file to the `proxy` folder so that Docker can copy it into its build.
+   provides the
+   [htpasswd](https://httpd.apache.org/docs/2.4/programs/htpasswd.html) command
+   to create the `.htpasswd` file for authentication. Put this file in the `proxy` folder so
+   that Docker can copy it into its build.
 2. **Build the container image** - run `docker build -t <your-image-name> .` to
    build the image with your authentication details.
 3. **Run it** - run your Docker image, making sure to allow access through the
@@ -21,11 +23,16 @@ Now you should be able to use the proxy. To use it with [cURL](https://curl.se/)
 command below.
 
 ```bash
-curl -x http://localhost:8080 -u username:password -L <your_url>
+curl -x localhost:8080 -U username:password -L <your_url>
 ```
 
-To view metrics, simply visit `http://localhost:8080/metrics`. A summary of the
-metrics will also be displayed on shutdown.
+To view metrics with curl, a similar command can be used.
+
+```bash
+curl http://localhost:8080/metrics -u username:password
+```
+
+A summary of the metrics will also be displayed on shutdown.
 ### Common Issues
 
 Note that if you get redirected, cURL will follow the response location
@@ -41,6 +48,9 @@ credentials for the redirect.
 the bandwidth usage and site analytics. This log is then parsed by a Golang
 service, which provides the overall metrics.
 
+Nginx is compiled with [OpenResty](https://openresty.org/en/) and [ngx_http_proxy_connect_module](https://github.com/chobits/ngx_http_proxy_connect_module) to allow
+the `connect` method be used for the traffic.
+
 There were a lot of considerations that went into this implementation. [Squid
 Cache](https://www.squid-cache.org/) or [Apache HTTP
 Server](https://httpd.apache.org/) may have also been viable choices,
@@ -49,7 +59,7 @@ Nginx is much easier to setup (biased).
 
 ## Areas of improvement
 
-**Metrics aggregation** - when a request is sent for the metrics endpoint,
+[ ] **Metrics aggregation** - when a request is sent for the metrics endpoint,
 the Go backend reads the entire log file of the Nginx proxy and calculates the
 bandwidth/analytics. This is not ideal for a few reasons. 
 1. When the file is being read, writing to the file becomes blocked. Under high
@@ -58,6 +68,8 @@ bandwidth/analytics. This is not ideal for a few reasons.
    could be saved by just parsing the new log lines since it last read the log
    file.
 
-**Proxy `Connect` method (in the works)** - the proxy `Connect` method more
-directly and securely forwards the requests through the proxy server. There are
-many benefits to using this method for proxying described [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT).
+[x] ~~**Proxy `Connect` method (in the works)** - the proxy `Connect` method
+  more directly and securely forwards the requests through the proxy server.
+  There are
+many benefits to using this method for proxying described
+[here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT).~~
