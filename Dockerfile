@@ -53,6 +53,8 @@ COPY proxy/.htpasswd /usr/local/openresty/nginx/conf/.htpasswd
 COPY proxy/cert.pem /usr/local/openresty/nginx/conf/cert.pem
 COPY proxy/key.pem /usr/local/openresty/nginx/conf/key.pem
 
+COPY proxy/proxy_auth.lua /usr/local/openresty/nginx/conf/proxy_auth.lua
+
 COPY proxy/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
 
 COPY --from=gobuilder /app/metrics_server /usr/local/bin/metrics_server
